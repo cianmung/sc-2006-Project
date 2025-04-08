@@ -1,24 +1,29 @@
 import WeatherData from "@/components/WeatherData";
-
-import { useEffect, useState } from "react";
+import { useLocalSearchParams } from "expo-router";
+import { useState, useEffect } from "react";
 import { fetchData } from "@/constants/ApiCall";
+import { trimTimezone } from "@/constants/Utils";
 
 export default function Index() {
-  const date = new Date();
+  const now = new Date();
+
+  const { date } = useLocalSearchParams();
   const [weatherData, setWeatherData] = useState({});
-  const [timeStamp, setTimeStamp] = useState(date.toString());
+  const [timeStamp, setTimeStamp] = useState(now.toString());
+
   useEffect(() => {
     const loadData = async () => {
       try {
-        const data = await fetchData("forecast/weather");
+        const data = await fetchData(
+          "forecast/weather?date=" + trimTimezone(date)
+        );
         setWeatherData(data.data);
       } catch (err) {
         console.error(err);
       }
     };
-
     loadData();
-  }, []);
+  }, [date, timeStamp]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -29,5 +34,6 @@ export default function Index() {
       clearInterval(interval);
     };
   }, []);
+
   return <WeatherData data={weatherData} timeStamp={timeStamp} />;
 }

@@ -11,6 +11,10 @@ export const styles = StyleSheet.create({
   container: {
     padding: 16,
   },
+  flatlistContainer: {
+    marginBottom: 240,
+    borderWidth: 1,
+  },
   locationText: {
     color: Colors.white,
     fontSize: 32,
@@ -30,17 +34,33 @@ export const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: "center",
   },
+  updateText: {
+    color: Colors.white,
+    fontSize: 20,
+    marginTop: 10,
+    textAlign: "center",
+  },
   coordinateContainer: {
     display: "flex",
     flexDirection: "row",
     marginTop: 20,
-    marginBottom: 20,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: Colors.white,
+    padding: 10,
   },
   coordinateText: {
     flex: 1,
     textAlign: "center",
     fontSize: 26,
     color: Colors.white,
+  },
+  periodText: {
+    textAlign: "center",
+    fontSize: 20,
+    color: Colors.white,
+    marginBottom: 10,
   },
   borderedContainer: {
     borderWidth: 1,
@@ -54,8 +74,8 @@ export const styles = StyleSheet.create({
     padding: 10,
   },
   currentWeatherImage: {
-    height: 120,
-    width: 150,
+    height: 100,
+    width: 100,
   },
   currentWeatherTextContainer: {
     flex: 1,
@@ -64,12 +84,12 @@ export const styles = StyleSheet.create({
     marginTop: 10,
     color: Colors.white,
     fontSize: 20,
-    textAlign: "center",
+    //textAlign: "center",
   },
   currentWeatherConText: {
-    marginTop: 6,
+    marginTop: 16,
     color: Colors.white,
-    fontSize: 36,
+    fontSize: 22,
     textAlign: "center",
     fontWeight: "500",
   },
@@ -83,6 +103,7 @@ export const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     opacity: 0.4,
+    marginBottom: 10,
   },
   iconTextOneLineText: {
     fontSize: 16,
@@ -118,14 +139,19 @@ export const styles = StyleSheet.create({
     marginTop: 10,
   },
   windText: {
-    marginTop: 20,
+    marginBottom: 10,
     color: Colors.white,
     fontSize: 18,
   },
   windConText: {
-    marginTop: 14,
     color: Colors.white,
-    fontSize: 32,
+    fontSize: 28,
+    fontWeight: "500",
+  },
+  windConUnit: {
+    marginTop: 5,
+    color: Colors.white,
+    fontSize: 18,
     fontWeight: "500",
   },
   uvIndexNum: {
@@ -133,10 +159,15 @@ export const styles = StyleSheet.create({
     color: Colors.white,
     marginTop: 10,
   },
-  uvIndexText: {
-    fontSize: 18,
+  humidNum: {
+    fontSize: 20,
     color: Colors.white,
-    marginTop: 10,
+    marginTop: 5,
+  },
+  uvIndexText: {
+    fontSize: 20,
+    color: Colors.white,
+    marginTop: 5,
   },
   humidText: {
     marginTop: 20,
@@ -156,7 +187,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     borderWidth: 1,
-    padding: 10,
+    padding: 15,
     borderRadius: 20,
     borderColor: Colors.white,
     backgroundColor: Colors.fadedBlackBackground,
@@ -165,12 +196,19 @@ export const styles = StyleSheet.create({
   },
   eachTownIcon: {
     height: 70,
-    width: 90,
+    width: 70,
   },
   eachTownText: {
-    fontSize: 26,
+    fontSize: 24,
     color: Colors.white,
     fontWeight: "500",
+  },
+  eachTownWeatherText: {
+    fontSize: 16,
+    color: Colors.white,
+    maxWidth: "80%",
+    marginTop: 5,
+    //borderWidth: 1,
   },
   forecastSelectContainer: {
     marginTop: 20,
@@ -188,17 +226,21 @@ export const styles = StyleSheet.create({
   forecastSelectIcon: {
     borderWidth: 1,
     borderColor: Colors.black,
-    height: 60,
-    width: 60,
+    height: 70,
+    width: 70,
     borderRadius: "50%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: Colors.white,
-    opacity: 0.7,
+    opacity: 0.4,
+  },
+  forecastSelectedIcon: {
+    opacity: 1,
   },
   forecastSelectText: {
-    fontSize: 26,
+    fontSize: 20,
+    textTransform: "uppercase",
   },
   forecastDisplayContainer: {
     marginTop: 20,
