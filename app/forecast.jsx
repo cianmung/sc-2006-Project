@@ -17,7 +17,10 @@ import {
   get12HourMinutesFormat,
 } from "@/constants/Utils";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import Entypo from "@expo/vector-icons/Entypo";
 import WeatherIcon from "@/components/WeatherIcon";
+import Page404 from "@/components/Page404";
+import Loading from "@/components/Loading";
 
 const specificTowns = () => {
   const date = new Date();
@@ -26,6 +29,7 @@ const specificTowns = () => {
   const [selectedDay, setSelectedDay] = useState(0);
   const [selectedDayData, setSelectedDayData] = useState({});
   const [timeStamp, setTimeStamp] = useState(date.toString());
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -34,6 +38,7 @@ const specificTowns = () => {
         setForecastData(data.data.records[0].forecasts);
         setSelectedDayData(data.data.records[0].forecasts[0]);
       } catch (err) {
+        setIsError(true);
         console.error(err);
       }
     };
@@ -57,141 +62,154 @@ const specificTowns = () => {
     };
   }, []);
 
-  if (forecastData.length != 0) {
-    return (
-      <View style={styles.pageContainer}>
-        <ImageBackground
-          source={backgroundImage}
-          resizeMethod="cover"
-          style={styles.backgroundImage}
-        >
-          <ScrollView>
-            <SafeAreaView>
-              <View style={styles.container}>
-                <View style={styles.forecastSelectContainer}>
-                  {forecastData.length != 0 &&
-                    forecastData.map((each, index) => (
-                      <Pressable
-                        onPress={() => {
-                          setSelectedDay(index);
-                        }}
-                        key={index}
-                      >
-                        <View
-                          style={[
-                            styles.forecastSelectIcon,
-                            index == selectedDay && styles.forecastSelectedIcon,
-                          ]}
+  if (!isError) {
+    if (forecastData.length != 0) {
+      return (
+        <View style={styles.pageContainer}>
+          <ImageBackground
+            source={backgroundImage}
+            resizeMethod="cover"
+            style={styles.backgroundImage}
+          >
+            <ScrollView>
+              <SafeAreaView>
+                <View style={styles.container}>
+                  <View style={styles.forecastSelectContainer}>
+                    {forecastData.length != 0 &&
+                      forecastData.map((each, index) => (
+                        <Pressable
+                          onPress={() => {
+                            setSelectedDay(index);
+                          }}
+                          key={index}
                         >
-                          <Text style={styles.forecastSelectText}>
-                            {getDayShortForm(each.timestamp.trim())}
-                          </Text>
-                        </View>
-                      </Pressable>
-                    ))}
-                </View>
-                <View style={styles.forecastDisplayContainer}>
-                  <Text style={styles.dateText}>
-                    {formatDate(selectedDayData.timeStamp)}
-                  </Text>
-                  <Text style={styles.updateText}>
-                    Last Update: {get12HourMinutesFormat(timeStamp)}
-                  </Text>
-                  <View style={styles.coordinateContainer}>
-                    <Text style={styles.coordinateText}>
-                      Low: {selectedDayData.temperature.low}&deg;
-                    </Text>
-                    <Text style={styles.coordinateText}>
-                      High: {selectedDayData.temperature.high}&deg;
-                    </Text>
+                          <View
+                            style={[
+                              styles.forecastSelectIcon,
+                              index == selectedDay &&
+                                styles.forecastSelectedIcon,
+                            ]}
+                          >
+                            <Text style={styles.forecastSelectText}>
+                              {getDayShortForm(each.timestamp.trim())}
+                            </Text>
+                          </View>
+                        </Pressable>
+                      ))}
                   </View>
-                  <View style={styles.borderedContainer}>
-                    <View style={styles.windContainer}>
-                      <View style={styles.fadedBackgroundContainerFullWidth}>
-                        <View style={styles.iconTextOneLineContainer}>
-                          <FontAwesome5 name="cloud" size={20} color="white" />
-                          <Text style={styles.iconTextOneLineText}>
-                            WEATHER FORECAST
-                          </Text>
-                        </View>
-                        <View style={styles.windInfoContainer}>
-                          <View style={styles.windInfoWrapper}>
-                            <WeatherIcon
-                              name={selectedDayData.forecast.text.trim()}
+                  <View style={styles.forecastDisplayContainer}>
+                    <Text style={styles.dateText}>
+                      {formatDate(selectedDayData.timeStamp)}
+                    </Text>
+                    <Text style={styles.updateText}>
+                      Last Update: {get12HourMinutesFormat(timeStamp)}
+                    </Text>
+                    <View style={styles.coordinateContainer}>
+                      <Text style={styles.coordinateText}>
+                        Low: {selectedDayData.temperature.low}&deg;
+                      </Text>
+                      <Text style={styles.coordinateText}>
+                        High: {selectedDayData.temperature.high}&deg;
+                      </Text>
+                    </View>
+                    <View style={styles.borderedContainer}>
+                      <View style={styles.windContainer}>
+                        <View style={styles.fadedBackgroundContainerFullWidth}>
+                          <View style={styles.iconTextOneLineContainer}>
+                            <FontAwesome5
+                              name="cloud"
+                              size={20}
+                              color="white"
                             />
-                          </View>
-                          <View style={styles.windInfoWrapper}>
-                            <Text style={styles.currentWeatherConText}>
-                              {selectedDayData.forecast.text}
+                            <Text style={styles.iconTextOneLineText}>
+                              WEATHER FORECAST
                             </Text>
+                          </View>
+                          <View style={styles.windInfoContainer}>
+                            <View style={styles.windInfoWrapper}>
+                              <WeatherIcon
+                                name={selectedDayData.forecast.text.trim()}
+                              />
+                            </View>
+                            <View style={styles.windInfoWrapper}>
+                              <Text style={styles.currentWeatherConText}>
+                                {selectedDayData.forecast.text}
+                              </Text>
+                            </View>
                           </View>
                         </View>
                       </View>
                     </View>
-                  </View>
 
-                  <View style={styles.borderedContainer}>
-                    <View style={styles.windContainer}>
-                      <View style={styles.fadedBackgroundContainerFullWidth}>
-                        <View style={styles.iconTextOneLineContainer}>
-                          <FontAwesome5 name="wind" size={20} color="white" />
-                          <Text style={styles.iconTextOneLineText}>WIND</Text>
-                        </View>
-                        <View style={styles.windInfoContainer}>
-                          <View style={styles.windInfoWrapper}>
-                            <Text style={styles.windText}>Speed:</Text>
-                            <Text style={styles.windConText}>
-                              {selectedDayData.wind.speed.low} -{" "}
-                              {selectedDayData.wind.speed.high}
-                            </Text>
-                            <Text style={styles.windConUnit}>km/h</Text>
+                    <View style={styles.borderedContainer}>
+                      <View style={styles.windContainer}>
+                        <View style={styles.fadedBackgroundContainerFullWidth}>
+                          <View style={styles.iconTextOneLineContainer}>
+                            <FontAwesome5 name="wind" size={20} color="white" />
+                            <Text style={styles.iconTextOneLineText}>WIND</Text>
                           </View>
-                          <View style={styles.windInfoWrapper}>
-                            <Text style={styles.windText}>Direction:</Text>
-                            <Text style={styles.windConText}>
-                              {selectedDayData.wind.direction.trim() ==
-                              "VARIABLE"
-                                ? "N.A"
-                                : selectedDayData.wind.direction}
-                            </Text>
-                            <Text style={styles.windConUnit}>
-                              {windDirectionFullForm(
-                                selectedDayData.wind.direction.trim()
-                              )}
-                            </Text>
+                          <View style={styles.windInfoContainer}>
+                            <View style={styles.windInfoWrapper}>
+                              <Text style={styles.windText}>Speed:</Text>
+                              <Text style={styles.windConText}>
+                                {selectedDayData.wind.speed.low} -{" "}
+                                {selectedDayData.wind.speed.high}
+                              </Text>
+                              <Text style={styles.windConUnit}>km/h</Text>
+                            </View>
+                            <View style={styles.windInfoWrapper}>
+                              <Text style={styles.windText}>Direction:</Text>
+                              <Text style={styles.windConText}>
+                                {selectedDayData.wind.direction.trim() ==
+                                "VARIABLE"
+                                  ? "N.A"
+                                  : selectedDayData.wind.direction}
+                              </Text>
+                              <Text style={styles.windConUnit}>
+                                {windDirectionFullForm(
+                                  selectedDayData.wind.direction.trim()
+                                )}
+                              </Text>
+                            </View>
                           </View>
                         </View>
                       </View>
                     </View>
-                  </View>
-                  <View style={styles.borderedContainer}>
-                    <View style={styles.windContainer}>
-                      <View style={styles.fadedBackgroundContainerFullWidth}>
-                        <View style={styles.iconTextOneLineContainer}>
-                          <FontAwesome5 name="wind" size={20} color="white" />
-                          <Text style={styles.iconTextOneLineText}>WIND</Text>
-                        </View>
-                        <View style={styles.windInfoContainer}>
-                          <View style={styles.windInfoWrapper}>
-                            <Text></Text>
-                            <Text style={styles.humidNum}>
-                              Low: {selectedDayData.relativeHumidity.low}%
+                    <View style={styles.borderedContainer}>
+                      <View style={styles.windContainer}>
+                        <View style={styles.fadedBackgroundContainerFullWidth}>
+                          <View style={styles.iconTextOneLineContainer}>
+                            <Entypo name="air" size={20} color="white" />
+                            <Text style={styles.iconTextOneLineText}>
+                              HUMIDITY
                             </Text>
-                            <Text style={styles.humidNum}>
-                              High: {selectedDayData.relativeHumidity.high}%
-                            </Text>
+                          </View>
+                          <View style={styles.windInfoContainer}>
+                            <View style={styles.windInfoWrapper}>
+                              <Text></Text>
+                              <Text style={styles.humidNum}>
+                                Low: {selectedDayData.relativeHumidity.low}%
+                              </Text>
+                              <Text style={styles.humidNum}>
+                                High: {selectedDayData.relativeHumidity.high}%
+                              </Text>
+                            </View>
                           </View>
                         </View>
                       </View>
                     </View>
                   </View>
                 </View>
-              </View>
-            </SafeAreaView>
-          </ScrollView>
-        </ImageBackground>
-      </View>
-    );
+              </SafeAreaView>
+            </ScrollView>
+          </ImageBackground>
+        </View>
+      );
+    } else {
+      return <Loading />;
+    }
+  } else {
+    return <Page404 />;
   }
 };
 

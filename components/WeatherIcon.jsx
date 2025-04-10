@@ -19,7 +19,6 @@ import HeavyShowers from "@/assets/images/weather-conditions/hs.png";
 import ThunderingShowers from "@/assets/images/weather-conditions/ht.png";
 import ThunderingShowersGusty from "@/assets/images/weather-conditions/hg.png";
 
-import test from "@/assets/images/test.png";
 import { styles } from "@/constants/Styles";
 
 export default function WeatherIcon({ name, brief }) {

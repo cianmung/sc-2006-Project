@@ -2,17 +2,22 @@ import WeatherData from "@/components/WeatherData";
 
 import { useEffect, useState } from "react";
 import { fetchData } from "@/constants/ApiCall";
+import Page404 from "@/components/Page404";
+import Loading from "@/components/Loading";
 
 export default function Index() {
   const date = new Date();
   const [weatherData, setWeatherData] = useState({});
   const [timeStamp, setTimeStamp] = useState(date.toString());
+  const [isError, setIsError] = useState(false);
+
   useEffect(() => {
     const loadData = async () => {
       try {
         const data = await fetchData("forecast/weather");
         setWeatherData(data.data);
       } catch (err) {
+        setIsError(true);
         console.error(err);
       }
     };
@@ -29,5 +34,14 @@ export default function Index() {
       clearInterval(interval);
     };
   }, []);
-  return <WeatherData data={weatherData} timeStamp={timeStamp} />;
+
+  if (!isError) {
+    if (weatherData?.records) {
+      return <WeatherData data={weatherData} timeStamp={timeStamp} />;
+    } else {
+      return <Loading />;
+    }
+  } else {
+    return <Page404 />;
+  }
 }

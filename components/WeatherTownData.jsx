@@ -25,9 +25,14 @@ export default function WeatherTownData({ data, timeStamp }) {
           <ScrollView>
             <SafeAreaView>
               <View style={styles.container}>
-                <Text style={styles.locationText}>{data[0].areaName.name}</Text>
+                <Text style={styles.locationText}>
+                  {data.find((each) => each.areaName).areaName.name}
+                </Text>
                 <Text style={styles.tempText}>
-                  {getTemp(data[1].temperature.low, data[1].temperature.high)}
+                  {getTemp(
+                    data.find((each) => each.temperature).temperature.low,
+                    data.find((each) => each.temperature).temperature.high
+                  )}
                   &deg;
                 </Text>
                 <Text style={styles.dateText}>
@@ -38,22 +43,38 @@ export default function WeatherTownData({ data, timeStamp }) {
                 </Text>
                 <View style={styles.coordinateContainer}>
                   <Text style={styles.coordinateText}>
-                    High: {data[1].temperature.low}&deg;
+                    High:{" "}
+                    {data.find((each) => each.temperature).temperature.low}&deg;
                   </Text>
                   <Text style={styles.coordinateText}>
-                    Low: {data[1].temperature.high}&deg;
+                    Low:{" "}
+                    {data.find((each) => each.temperature).temperature.high}
+                    &deg;
                   </Text>
                 </View>
                 <View style={styles.borderedContainer}>
-                  <View style={styles.currentWeatherContainer}>
-                    <WeatherIcon name={data[3].forecast.text.trim()} />
-                    <View style={styles.currentWeatherTextContainer}>
-                      <Text style={styles.currentWeatherText}>
-                        Weather Forecast:
-                      </Text>
-                      <Text style={styles.currentWeatherConText}>
-                        {data[3].forecast.text}
-                      </Text>
+                  <View style={styles.windContainer}>
+                    <View style={styles.fadedBackgroundContainerFullWidth}>
+                      <View style={styles.iconTextOneLineContainer}>
+                        <FontAwesome5 name="cloud" size={20} color="white" />
+                        <Text style={styles.iconTextOneLineText}>
+                          WEATHER FORECAST
+                        </Text>
+                      </View>
+                      <View style={styles.windInfoContainer}>
+                        <View style={styles.windInfoWrapper}>
+                          <WeatherIcon
+                            name={data
+                              .find((each) => each.forecast)
+                              .forecast.text.trim()}
+                          />
+                        </View>
+                        <View style={styles.windInfoWrapper}>
+                          <Text style={styles.currentWeatherConText}>
+                            {data.find((each) => each.forecast).forecast.text}
+                          </Text>
+                        </View>
+                      </View>
                     </View>
                   </View>
                 </View>
@@ -68,20 +89,27 @@ export default function WeatherTownData({ data, timeStamp }) {
                         <View style={styles.windInfoWrapper}>
                           <Text style={styles.windText}>Wind Speed:</Text>
                           <Text style={styles.windConText}>
-                            {data[2].wind.speed.low} - {data[2].wind.speed.high}
+                            {data.find((each) => each.wind).wind.speed.low} -{" "}
+                            {data.find((each) => each.wind).wind.speed.high}
                           </Text>
                           <Text style={styles.windConUnit}>km/h</Text>
                         </View>
                         <View style={styles.windInfoWrapper}>
                           <Text style={styles.windText}>Wind Direction:</Text>
                           <Text style={styles.windConText}>
-                            {data[2].wind.direction.trim() == "VARIABLE"
+                            {data
+                              .find((each) => each.wind)
+                              .wind.direction.trim() == "VARIABLE"
                               ? "N.A"
-                              : data[2].wind.direction.trim()}
+                              : data
+                                  .find((each) => each.wind)
+                                  .wind.direction.trim()}
                           </Text>
                           <Text style={styles.windConUnit}>
                             {windDirectionFullForm(
-                              data[2].wind.direction.trim()
+                              data
+                                .find((each) => each.wind)
+                                .wind.direction.trim()
                             )}
                           </Text>
                         </View>
@@ -100,10 +128,12 @@ export default function WeatherTownData({ data, timeStamp }) {
                         <View style={styles.windInfoWrapper}>
                           <Text></Text>
                           <Text style={styles.humidNum}>
-                            Low: {data[4].humidity.low}%
+                            Low:{" "}
+                            {data.find((each) => each.humidity).humidity.low}%
                           </Text>
                           <Text style={styles.humidNum}>
-                            High: {data[4].humidity.high}%
+                            High:{" "}
+                            {data.find((each) => each.humidity).humidity.high}%
                           </Text>
                         </View>
                       </View>

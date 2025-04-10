@@ -12,8 +12,7 @@ export const styles = StyleSheet.create({
     padding: 16,
   },
   flatlistContainer: {
-    marginBottom: 240,
-    borderWidth: 1,
+    marginBottom: 90,
   },
   locationText: {
     color: Colors.white,
@@ -74,6 +73,9 @@ export const styles = StyleSheet.create({
     padding: 10,
   },
   currentWeatherImage: {
+    marginTop: "auto",
+    marginBottom: "auto",
+    marginLeft: 20,
     height: 100,
     width: 100,
   },
@@ -87,7 +89,8 @@ export const styles = StyleSheet.create({
     //textAlign: "center",
   },
   currentWeatherConText: {
-    marginTop: 16,
+    marginTop: "auto",
+    marginBottom: "auto",
     color: Colors.white,
     fontSize: 22,
     textAlign: "center",
@@ -178,8 +181,7 @@ export const styles = StyleSheet.create({
     color: Colors.white,
     textAlign: "center",
     fontSize: 32,
-    marginTop: 60,
-    marginBottom: 20,
+    marginTop: 30,
     fontWeight: "500",
   },
   eachTownContainer: {
@@ -195,8 +197,8 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
   },
   eachTownIcon: {
-    height: 70,
-    width: 70,
+    height: 50,
+    width: 50,
   },
   eachTownText: {
     fontSize: 24,
@@ -206,9 +208,7 @@ export const styles = StyleSheet.create({
   eachTownWeatherText: {
     fontSize: 16,
     color: Colors.white,
-    maxWidth: "80%",
     marginTop: 5,
-    //borderWidth: 1,
   },
   forecastSelectContainer: {
     marginTop: 20,
@@ -254,5 +254,25 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 16,
+  },
+  errorContainer: {
+    minHeight: "100%",
+  },
+  errorWrapper: {
+    marginTop: "auto",
+    marginBottom: "auto",
+  },
+  errorImg: {
+    marginLeft: "auto",
+    marginRight: "auto",
+    height: 50,
+    width: 50,
+  },
+  errorText: {
+    color: Colors.white,
+    fontSize: 25,
+    textAlign: "center",
+    marginLeft: 20,
+    marginRight: 20,
   },
 });

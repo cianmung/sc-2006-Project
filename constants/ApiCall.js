@@ -1,5 +1,5 @@
-const API = "http://192.168.0.115:8080/";
-//const API = "http://10.91.104.96:8080/";
+//const API = "http://192.168.0.115:8080/";
+const API = "http://10.91.168.158:8080/";
 import axios from "axios";
 
 export const fetchData = (endpoints) => {
